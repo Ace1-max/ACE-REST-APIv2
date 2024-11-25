@@ -7,7 +7,7 @@ exports.config = {
     description: 'Fetch manga details',
     method: 'get',
     category: 'manga',
-    link: ['/detail?komik_id=12345']
+    link: ['/detail?komik_id=']
 };
 
 exports.initialize = async function ({ req, res }) {
