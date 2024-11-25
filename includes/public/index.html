@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajiro API - Dashboard</title>
+    <link rel="icon" href="https://www.svgrepo.com/show/88703/api.svg" />
+    <title>API - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,7 +13,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Ubuntu', 'sans-serif'],
                     },
                     colors: {
                         dark: {
@@ -24,9 +26,21 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600;700&display=swap');
 
-        body {
+            body {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}        {
             overflow-x: hidden;
         }
 
@@ -70,7 +84,7 @@
     <aside id="sidebar" class="fixed inset-y-0 left-0 w-80 bg-white dark:bg-dark-secondary z-30 border-r border-gray-200 dark:border-gray-800">
         <div class="flex flex-col h-full">
             <div class="p-4 border-b border-gray-200 dark:border-gray-800">
-                <h2 class="text-lg font-semibold">Ajiro API</h2>
+                <h2 class="text-lg font-semibold">Explore APIs</h2>
             </div>
             <div class="p-4">
                 <input type="text" id="api-search" placeholder="Search APIs..." class="w-full p-2 border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400">
@@ -103,7 +117,7 @@
         <main class="flex-grow overflow-y-auto">
             <div class="max-w-7xl mx-auto px-4 py-6 space-y-6">
                 <section class="bg-white dark:bg-dark-secondary rounded-lg p-6 space-y-4 shadow-sm">
-                    <h2 class="text-xl font-semibold">Welcome to Ajiro Rest API</h2>
+                    <h2 class="text-xl font-semibold">Welcome to ACE's REST API</h2>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
                         A powerful and free API service offering a wide range of features for developers.
                     </p>
@@ -120,10 +134,10 @@
                     <div class="space-y-2 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                         <h3 class="text-lg font-semibold">Terms of Service:</h3>
                         <ol class="list-decimal list-inside text-xs text-gray-600 dark:text-gray-300 space-y-1">
-                            <li>Do not flood requests.</li>
-                            <li>The owner can change the terms of this API at any time to maintain API quality.</li>
-                            <li>Please don't attack it, it hurts.</li>
-                            <li>The owner is not responsible for what you do while using this website.</li>
+                            <li>Use the API responsibly and avoid overwhelming it</li>
+                            <li>We may update these terms to keep the service running smoothly</li>
+                            <li>By using the API, you agree to follow our guidelines and play fair</li>
+                            <li>Reach out if the API goes down or you encounter issues</li>
                         </ol>
                     </div>
                 </section>
@@ -154,14 +168,14 @@
         <footer class="bg-white dark:bg-dark-secondary shadow-sm mt-auto border-t border-gray-200 dark:border-gray-800">
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
                 <p class="text-center text-sm text-gray-600 dark:text-gray-400">
-                    &copy; <span id="current-year"></span> AjiroDesu. All Rights Reserved.
+                    &copy; <span id="current-year"></span> AceGerome. All Rights Reserved.
                 </p>
             </div>
         </footer>
     </div>
     <script src="function-dash.js"></script>
     <script>
-    class AjiroApiDashboard {
+    class AceApiDashboard {
         constructor() {
             this.apiCache = new Map();
             this.sidebar = document.getElementById('sidebar');
@@ -382,7 +396,7 @@
 
     // Initialize dashboard
     document.addEventListener('DOMContentLoaded', () => {
-        window.dashboard = new AjiroApiDashboard();
+        window.dashboard = new AceApiDashboard();
     });
     </script>
 </body>
