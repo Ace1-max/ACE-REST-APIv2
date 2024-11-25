@@ -28,6 +28,7 @@ exports.config = {
     name: 'GPT-4o',
     author: 'AceGerome',
     description: 'A useful api like chatgpt',
+    method: 'get',
     category: 'ai',
     link: ['/GPT-4o?ask=hi']
 };
