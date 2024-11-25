@@ -7,12 +7,12 @@ exports.config = {
     description: 'Fetch manga details',
     method: 'get',
     category: 'manga',
-    link: ['/detail?komik_id=']
+    link: ['/detail?manga_id=']
 };
 
 exports.initialize = async function ({ req, res }) {
     try {
-        const komik_id = req.query.komik_id;
+        const komik_id = req.query.manga_id;
 
         if (!komik_id) {
             return res.json({
