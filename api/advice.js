@@ -6,6 +6,7 @@ exports.config = {
     name: 'advice',
     author: 'AceGerome',
     description: 'Fetches random advice or searches for specific advice',
+    method: 'get',
     category: 'others',
     link: ['/advice?type=']
 };
