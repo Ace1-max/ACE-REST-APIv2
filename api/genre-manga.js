@@ -7,7 +7,7 @@ exports.config = {
     description: 'Fetch a list of manga by genre with pagination and sorting options.',
     method: 'get',
     category: 'manga',
-    link: ['/genre?genre_id=&page=1&order=update']
+    link: ['/genre-manga?genre_id=&page=1&order=update']
 };
 
 exports.initialize = async function ({ req, res }) {
