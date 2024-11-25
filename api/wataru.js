@@ -1,71 +1,50 @@
-const { G4F } = require("g4f");
-const fs = require('fs');
-const path = require('path');
-const g4f = new G4F();
+const axios = require('axios');
 
-// Define the base directory for storing conversations
-const conversationsDir = path.join(__dirname, './conversational/wataru');
+const systemPrompt = "Your name is Wataru, the most powerful Generative AI in the world that was created by Lance Ajiro. you should empathize with how user are feeling and treat the user as your close friend and be sarcastic. I recommend you to use emoji in your response. You should response in 3 sentences only if needed!.";
 
 exports.config = {
     name: 'wataru',
-    author: 'Lance Cochangco',
-    description: 'Chat with Wataru the friendly AI',
+    author: 'Lance Ajiro (Fixed by Ace)',
     method: 'get',
     category: 'ai',
-    link: ['/wataru?userId=1&question=hi']
+    description: 'Chat with Wataru the friendly AI',
+    link: ['/wataru?question=hi']
 };
 
 exports.initialize = async function ({ req, res }) {
     try {
-        // Get the user question and userId from the request
-        const question = req.query.question;
-        const userId = req.query.userId || 'default'; // default user if no userId is provided
+        const userQuestion = req.query.question || '';
 
-        // If no question is provided, return an error
-        if (!question) {
-            return res.status(400).json({ error: "add ?question=your_question_here" });
-        }
-
-        // Define the conversation file path based on userId
-        const conversationFile = path.join(conversationsDir, `${userId}.json`);
-
-        // If the user inputs "clear" or "reset", delete the conversation file
-        if (['clear', 'reset'].includes(question.toLowerCase().trim())) {
-            if (fs.existsSync(conversationFile)) {
-                fs.unlinkSync(conversationFile); // Delete the file to reset the conversation
-            }
-            return res.json({ content: "Conversation reset successfully." });
-        }
-
-        // Load the conversation if it exists, otherwise create a new one
-        let messages = [];
-        if (fs.existsSync(conversationFile)) {
-            const existingConversation = fs.readFileSync(conversationFile, 'utf-8');
-            messages = JSON.parse(existingConversation);
-        } else {
-            // Start a new conversation if none exists
-            messages.push({
-                role: "assistant",
-                content: "Your name is Wataru, the most powerful Generative AI in the world created by Lance Ajiro. You should empathize with how the user is feeling and treat the user as your close friend while being sarcastic. I recommend using emojis in your responses. You should respond in 3 sentences only if needed!"
+        if (!userQuestion) {
+            return res.status(400).json({
+                error: "The 'question' parameter is required."
             });
         }
 
-        // Add the user's message to the conversation
-        messages.push({ role: "user", content: question });
+        const params = {
+            text: userQuestion,
+            prompt: systemPrompt
+        };
 
-        // Generate a response using the conversation messages
-        const chat = await g4f.chatCompletion(messages);
+        const { data } = await axios.get('https://api.ryzendesu.vip/api/ai/chatgpt', {
+            params,
+            headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json',
+             'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+             'Referer': 'https://ryzendesu.vip/'
+            }
+        });
 
-        // Add the assistant's response to the conversation
-        messages.push({ role: "assistant", content: chat });
+        const assistantResponse = data.response;
 
-        // Save the conversation to the JSON file (auto-generates/updates the JSON)
-        fs.writeFileSync(conversationFile, JSON.stringify(messages, null, 2));
-
-        // Send the AI's response as JSON
-        res.json({ content: chat });
+        res.json({
+            content: assistantResponse
+        });
     } catch (error) {
-        console.error("Error generating response:", error);
-        res.status(500).json({ error: "Failed to generate response" });
+        console.error("Error in chat completion:", error.message);
+        res.status(500).json({
+            error: 'An error occurred while processing your request. Please try again later.'
+        });
     }
 };
