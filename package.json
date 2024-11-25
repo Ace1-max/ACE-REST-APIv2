@@ -1,7 +1,7 @@
 {
-  "name": "ajiroapi",
+  "name": "aceapi",
   "version": "1.0.0",
-  "description": "A simple rest api by AjiroDesu",
+  "description": "A simple rest api by AceGerome",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajirodesu/ajiroapi.git"
+    "url": "https://github.com/aceakira1017/ace-rest-apiv2.git"
   },
   "keywords": [],
-  "author": "AjiroDesu",
+  "author": "AceGerome",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^18.0.6",
@@ -29,6 +29,7 @@
     "express": "^4.19.2",
     "fs-extra": "^11.2.0",
     "g4f": "^1.4.6",
+    "groq-sdk": "^0.7.0",
     "helmet": "latest",
     "kleur": "^4.1.5",
     "knights-canvas": "^1.3.7-a",
@@ -38,6 +39,7 @@
     "nexo-aio-downloader": "^1.4.1",
     "node-fetch": "^2.6.7",
     "ssl-express-www": "^3.2.1",
-    "unlimited-ai": "^2.0.2"
+    "unlimited-ai": "^2.0.2",
+    "hercai": "^12.3.2"
   }
 }
