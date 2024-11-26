@@ -18,7 +18,7 @@ exports.initialize = async function ({ req, res }) {
             return res.json({
                 status: false,
                 creator: this.config.author,
-                message: "[!] Missing komik_id parameter!"
+                message: "[!] Missing manga_id parameter!"
             });
         }
 
