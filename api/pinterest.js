@@ -6,21 +6,21 @@ exports.config = {
     description: 'Search for Pinterest pins based on a query',
     method: 'get',
     category: 'search',
-    link: ['/pinterest?pinte=']
+    link: ['/pinterest?query=']
 };
 
 exports.initialize = async function ({ req, res }) {
     try {
-        const keyword = req.query.pinte;
+        const keyword = req.query.query;
         if (!keyword) {
             return res.json({
                 status: false,
                 creator: this.config.author,
-                message: "[!] enter 'pinte' query parameter!"
+                message: "[!] enter 'query' parameter!"
             });
         }
 
-        const response = await axios.get(`https://celestial-dainsleif-v2.onrender.com/pinterest?pinte=${keyword}`);
+        const response = await axios.get(global.config.dainsapi + `/pinterest?pinte=${keyword}`);
         const pins = response.data;
 
         if (!pins || pins.length === 0) {
