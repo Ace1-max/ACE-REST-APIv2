@@ -1,4 +1,57 @@
 const axios = require('axios');
+
+exports.config = {
+    name: 'pinterest',
+    author: 'AceGerome',
+    description: 'Search for Pinterest pins based on a query',
+    method: 'get',
+    category: 'search',
+    link: ['/pinterest?pinte=']
+};
+
+exports.initialize = async function ({ req, res }) {
+    try {
+        const keyword = req.query.pinte;
+        if (!keyword) {
+            return res.json({
+                status: false,
+                creator: this.config.author,
+                message: "[!] enter 'pinte' query parameter!"
+            });
+        }
+
+        const response = await axios.get(`https://celestial-dainsleif-v2.onrender.com/pinterest?pinte=${keyword}`);
+        const pins = response.data;
+
+        if (!pins || pins.length === 0) {
+            return res.json({
+                status: false,
+                creator: this.config.author,
+                message: `No pins found for '${keyword}'!`
+            });
+        }
+
+        const result = {
+            status: true,
+            creator: this.config.author,
+            totalData: pins.length,
+            result: pins
+        };
+
+        res.json(result);
+    } catch (error) {
+        console.error("Error fetching Pinterest data:", error);
+        res.status(500).json({
+            status: false,
+            creator: this.config.author,
+            message: "Failed to retrieve Pinterest data."
+        });
+    }
+};
+
+
+
+/*const axios = require('axios');
 const cheerio = require('cheerio');
 
 exports.config = {
@@ -72,4 +125,4 @@ exports.initialize = async function ({ req, res }) {
             error: error.message
         });
     }
-};
+};*/
