@@ -3,6 +3,7 @@
   "apikey": "huf6XLPl6dIcE92wX9zCxKTgtRWEW9PH",
   "ryzenapi": "https://api.ryzendesu.vip/api/",
   "mangaapi": "https://mangakita.id",
+  "dainsapi": "https://celestial-dainsleif-v2.onrender.com",
   "name": "ACE API",
   "name2": "ACE Rest API",
   "description": "Rest API by AceGerome",
