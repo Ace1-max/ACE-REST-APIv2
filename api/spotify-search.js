@@ -3,7 +3,7 @@ const axios = require('axios');
 exports.config = {
     name: 'spotify',
     author: 'AceGerome',
-    description: 'Search for Spotify tracks based on a query',
+    description: 'Search for Spotify tracks based on a query and get download information',
     method: 'get',
     category: 'search',
     link: ['/spotify?search=']
@@ -32,6 +32,12 @@ async function getSpotifyToken() {
         console.error("Error generating Spotify token:", error);
         throw new Error("Failed to generate Spotify token.");
     }
+}
+
+function formatDuration(milliseconds) {
+    const minutes = Math.floor(milliseconds / 60000);
+    const seconds = Math.floor((milliseconds % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
 exports.initialize = async function ({ req, res }) {
@@ -81,40 +87,30 @@ exports.initialize = async function ({ req, res }) {
             album: track.album.name,
             artists: track.artists.map(artist => artist.name),
             release_date: track.album.release_date,
-            duration_ms: track.duration_ms,
+            duration_ms: formatDuration(track.duration_ms),
             popularity: track.popularity,
             preview_url: track.preview_url,
             spotify_url: track.external_urls.spotify,
             album_image: track.album.images[0]?.url || null
         };
 
-        const spotifyDlUrl = `https://api.betabotz.eu.org/api/download/spotify?url=${track.external_urls.spotify}&apikey=lgnMtggS`;
-        const downloadResponse = await axios.get(spotifyDlUrl);
+        const spotifyDlUrl = `https://spotydown.media/api/download-track`;
+        const downloadResponse = await axios.post(
+            spotifyDlUrl,
+            { url: track.external_urls.spotify },
+            { headers: { "Content-Type": "application/json" } }
+        );
 
-        if (downloadResponse.data.status && downloadResponse.data.result) {
-            const downloadData = downloadResponse.data.result.data;
+        const downloadUrl = downloadResponse?.data?.file_url;
 
-            return res.json({
-                status: true,
-                creator: this.config.author,
-                track: trackInfo,
-                download: {
-                    title: downloadData.title,
-                    artist: downloadData.artist.name,
-                    thumbnail: downloadData.thumbnail,
-                    duration: downloadData.duration,
-                    preview_url: downloadData.preview,
-                    download_url: downloadData.url
-                }
-            });
-        } else {
-            return res.json({
-                status: true,
-                creator: this.config.author,
-                track: trackInfo,
-                message: "Download information is not available."
-            });
-        }
+        return res.json({
+            status: true,
+            creator: this.config.author,
+            track: trackInfo,
+            download: {
+                download_url: downloadUrl || "Download information is not available."
+            }
+        });
     } catch (error) {
         console.error("Error fetching Spotify data:", error);
         res.status(500).json({
