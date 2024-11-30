@@ -396,7 +396,7 @@
             videoInfo.style.display = 'none';
 
             try {
-                const response = await fetch(`api/tikdl?url=${encodeURIComponent(videoUrl)}`);
+                const response = await fetch(`https://ace-rest-api.onrender.com/api/tikdl?url=${encodeURIComponent(videoUrl)}`);
                 const data = await response.json();
 
                 loaderContainer.classList.remove('show');
