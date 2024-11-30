@@ -21,7 +21,7 @@ exports.initialize = async function ({ req, res }) {
         const response = await axios.get(apiUrl);
 
         if (response.data && response.data.data) {
-            res.json({ status: true, author: 'AceGerome', result: response.data.data });
+            res.json({ status: true, author: 'AceGerome', data: response.data.data });
         } else {
             res.status(400).json({ error: "Failed to download video. Please check the URL and try again." });
         }
