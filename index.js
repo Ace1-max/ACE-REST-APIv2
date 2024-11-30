@@ -90,6 +90,16 @@ app.get("/", (req, res) => {
   }
 });
 
+// tiktokdl web
+app.get("/tiktokdl", (req, res) => {
+  try {
+    res.sendFile(path.join(__dirname, "includes", "public", "tikdl.html"));
+  } catch (error) {
+    log.error('Error entering tiktokdl page:', error);
+    res.status(500).send('Internal server error');
+  }
+});
+
 // 404 handler
 app.use((req, res) => {
   try {
