@@ -401,7 +401,7 @@
 
                 loaderContainer.classList.remove('show');
 
-                if (data.code === 0) {
+                if (data.status === true) {
                     videoInfo.style.display = 'block';
                     document.getElementById('thumbnail').src = data.data.cover;
                     document.getElementById('author').textContent = data.data.author.nickname;
