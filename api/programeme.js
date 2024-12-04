@@ -1,41 +1,34 @@
 const axios = require('axios');
+const cheerio = require('cheerio');
 
 exports.config = {
     name: 'programeme',
     author: 'AceGerome',
-    description: 'Fetch a random programming meme.',
-    method: 'get',
+    description: 'Fetch random programmer humor posts with titles and images',
     category: 'others',
-    link: ['/programeme']
+    link: ['/programeme'],
+    method: 'get'
 };
 
 exports.initialize = async function ({ req, res }) {
     try {
-        const apiUrl = `${global.config.dainsapi}/programeme`;
-        const response = await axios.get(apiUrl, {
-            headers: { 'accept': 'application/json' }
+        const url = 'https://programmerhumor.io/?bimber_random_post=true';
+        const response = await axios.get(url);
+        const html = response.data;
+        const $ = cheerio.load(html);
+
+        const posts = [];
+        $('.post').each((index, element) => {
+            const title = $(element).find('.entry-title').text().trim();
+            const imageUrl = $(element).find('img.attachment-bimber-grid-2of3').attr('data-src');
+            if (title && imageUrl) {
+                posts.push({ title, imageUrl });
+            }
         });
 
-        if (!response.data || response.data.length === 0) {
-            return res.status(404).json({
-                status: false,
-                creator: this.config.author,
-                message: "No memes found. Please try again later."
-            });
-        }
-
-        const meme = response.data[0];
-        res.json({
-            status: true,
-            creator: this.config.author,
-            title: meme.title,
-            image: meme.imageUrl
-        });
+        res.status(200).json({ status: "success", code: 200, posts });
     } catch (error) {
-        res.status(500).json({
-            status: false,
-            creator: this.config.author,
-            message: "An error occurred while fetching the meme."
-        });
+        console.error("Error:", error);
+        res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 };
