@@ -125,7 +125,7 @@ exports.initialize = async ({ req, res }) => {
     }
 
     try {
-        const avatarPath = await generateAvatar({ id, bgtext, signature, color });
+        const avatarPath = await generateAvatar({ id, chu_nen: bgtext, chu_ky: signature, coo: color });
         res.sendFile(avatarPath);
     } catch (error) {
         res.status(500).json({
