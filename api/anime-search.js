@@ -13,7 +13,7 @@ exports.initialize = async function ({ req, res }) {
     try {
         const { type, id, name, movie } = req.query;
 
-        const data = JSON.parse(fs.readFileSync('./data/anime.json', 'utf8'));
+        const data = JSON.parse(fs.readFileSync('./tmp/anime.json', 'utf8'));
 
         if (!type) {
             return res.json({
