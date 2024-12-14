@@ -42,6 +42,7 @@
     "unlimited-ai": "^2.0.2",
     "hercai": "^12.3.2",
     "tinyurl": "^1.1.7",
-    "is-url": "^1.2.4"
+    "is-url": "^1.2.4",
+    "limit-text-js": "^1.0.2"
   }
 }
