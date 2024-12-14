@@ -40,6 +40,8 @@
     "node-fetch": "^2.6.7",
     "ssl-express-www": "^3.2.1",
     "unlimited-ai": "^2.0.2",
-    "hercai": "^12.3.2"
+    "hercai": "^12.3.2",
+    "tinyurl": "^1.1.7",
+    "is-url": "^1.2.4"
   }
 }
