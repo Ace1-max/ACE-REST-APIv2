@@ -11,7 +11,7 @@ exports.config = {
 
 exports.initialize = async function ({ req, res }) {
     try {
-        const data = JSON.parse(fs.readFileSync(__dirname, 'tmp', 'anime.json', 'utf8'));
+        const data = JSON.parse(fs.readFileSync('./api/tmp/anime.json', 'utf8'));
 
         const animeList = data.map(item => ({
             ID: item.ID,
