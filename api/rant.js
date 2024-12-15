@@ -16,10 +16,10 @@ async function fetchPosts(q, page = 1, limit = 5) {
         const response = await axios.get(url, {
             params: { q, page, limit },
             headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json',
-             'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-             'Referer': 'https://sendthesong.xyz/'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'User -Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+                'Referer': 'https://sendthesong.xyz/'
             }
         });
 
@@ -42,11 +42,11 @@ async function fetchPosts(q, page = 1, limit = 5) {
             };
         } else {
             console.error(`Request failed with status ${response.status}: ${response.statusText}`);
-            return null;
+            return { status: "error", message: "Failed to fetch posts." };
         }
     } catch (error) {
         console.error("Error fetching posts:", error.message);
-        return null;
+        return { status: "error", message: "An error occurred while fetching posts." };
     }
 }
 
@@ -58,8 +58,9 @@ exports.initialize = async function ({ req, res }) {
 
     const postsData = await fetchPosts(q, page, limit);
 
-    if (postsData) {
+    if (postsData.status === "success") {
         return res.status(200).json(postsData);
-        return res.status(500).json({ error: "Failed to fetch posts." });
+    } else {
+        return res.status(500).json({ error: postsData.message });
     }
 };
