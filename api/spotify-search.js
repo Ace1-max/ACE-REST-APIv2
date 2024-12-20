@@ -122,7 +122,7 @@ exports.initialize = async function ({ req, res }) {
             creator: this.config.author,
             track: trackInfo,
             download: {
-                download_url: `https://api.fabdl.com/spotify/download-mp3/${download?.data?.result?.tid}` : "Download information is not available."
+                download_url: `https://api.fabdl.com/spotify/download-mp3/${download?.data?.result?.tid}` || "Download information is not available."
             }
         });
     } catch (error) {
