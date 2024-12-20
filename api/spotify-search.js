@@ -94,21 +94,33 @@ exports.initialize = async function ({ req, res }) {
             album_image: track.album.images[0]?.url || null
         };
 
-        const spotifyDlUrl = `https://spotydown.media/api/download-track`;
-        const downloadResponse = await axios.post(
-            spotifyDlUrl,
-            { url: track.external_urls.spotify },
-            { headers: { "Content-Type": "application/json" } }
-        );
+        const spotifyDlUrl = `https://api.fabdl.com/spotify/get?url=${track.external_urls.spotify}`;
+        const downloadResponse = await axios.request({
+            method: 'GET',
+            url: spotifyDlUrl,
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Mobile Safari/537.36',
+                'Accept': 'application/json, text/plain, /',
+                'accept-language': 'en-US',
+                'sec-ch-ua-mobile': '?1',
+                'sec-ch-ua-platform': '"Android"',
+                'origin': 'https://spotifydownload.org',
+                'sec-fetch-site': 'cross-site',
+                'sec-fetch-mode': 'cors',
+                'sec-fetch-dest': 'empty',
+                'referer': 'https://spotifydownload.org/',
+                'priority': 'u=1, i',
+            }
+        });
 
-        const downloadUrl = downloadResponse?.data?.file_url;
+        const downloadUrl = downloadResponse?.data?.result?.download_url;
 
         return res.json({
             status: true,
             creator: this.config.author,
             track: trackInfo,
             download: {
-                download_url: downloadUrl || "Download information is not available."
+                download_url: downloadUrl ? `https://api.fabdl.com${downloadUrl}` : "Download information is not available."
             }
         });
     } catch (error) {
