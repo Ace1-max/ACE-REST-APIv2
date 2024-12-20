@@ -24,7 +24,7 @@ exports.initialize = async function ({ req, res }) {
             });
         }
 
-        const apiUrl = `https://api.zpi.my.id/v1/download/twitter?url=${encodeURIComponent(url)}`;
+        const apiUrl = global.config.zestapi + `v1/download/twitter?url=${encodeURIComponent(url)}`;
         
         const response = await axios.get(apiUrl);
 
