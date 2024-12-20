@@ -2,6 +2,7 @@
   "port": "8080",
   "apikey": "x1qPFHENsc8pU6ALQnQoHtGlYi9IoQlT",
   "ryzenapi": "https://api.ryzendesu.vip/api/",
+  "zestapi": "https://api.zpi.my.id/",
   "mangaapi": "https://mangakita.id",
   "dainsapi": "https://celestial-dainsleif-v2.onrender.com",
   "name": "ACE API",
