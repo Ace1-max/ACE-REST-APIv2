@@ -113,14 +113,16 @@ exports.initialize = async function ({ req, res }) {
             }
         });
 
-        const downloadUrl = downloadResponse?.data?.result?.download_url;
+        const t = downloadResponse?.data?.result;
+
+        const download = await axios.get(`https://api.fabdl.com/spotify/mp3-convert-task/${t.gid}/${t.id}`);
 
         return res.json({
             status: true,
             creator: this.config.author,
             track: trackInfo,
             download: {
-                download_url: downloadUrl ? `https://api.fabdl.com${downloadUrl}` : "Download information is not available."
+                download_url: `https://api.fabdl.com/spotify/download-mp3/${download?.data?.result?.tid}` : "Download information is not available."
             }
         });
     } catch (error) {
